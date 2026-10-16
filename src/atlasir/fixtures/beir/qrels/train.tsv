@@ -1,0 +1,6 @@
+query-id	corpus-id	score
+q-001	a	3
+q-001	b	1
+q-002	d	0
+q-003	c	1
+q-004	c	1

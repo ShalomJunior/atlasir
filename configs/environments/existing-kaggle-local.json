@@ -1,0 +1,21 @@
+{
+  "interpreter": "/home/masterjs/kaggle/.venv/bin/python",
+  "lockfile_environment": false,
+  "note": "Selected relevant versions only; full installed-package list is captured in each E00 run. No GPU hardware inspected.",
+  "packages": {
+    "atlasir": "0.1.0",
+    "faiss-cpu": "1.15.0",
+    "ir-measures": "0.4.3",
+    "numpy": "2.5.0",
+    "pytest": "9.1.1",
+    "pytrec-eval-terrier": "0.5.10",
+    "ruff": "0.16.3",
+    "scipy": "1.18.0",
+    "sentence-transformers": "6.0.0",
+    "torch": "2.9.1",
+    "transformers": "5.15.1"
+  },
+  "profile": "existing-kaggle-local",
+  "python": "3.12.3",
+  "schema_version": 1
+}

@@ -1,0 +1,17 @@
+{
+  "historical_source_sha256": "43de95ba193b5c2440900b3a8b5fd7cc94cf855f99850117ce80c88619735d96",
+  "independent_drive_restore": "pending",
+  "independent_machine": false,
+  "kaggle_execution": "pending",
+  "metrics_and_ranked_ids": "exact match",
+  "original_run_id": "20261016t183413z-e01-603a3450-feab55da4672",
+  "python_profile": "3.11",
+  "queries": 162,
+  "rebuilt_path": ".scratch/day05-historical-rebuild/output/artifacts/runs/20261016t183802z-e01-f5d16b94-548e037d9c5c",
+  "rebuilt_run_id": "20261016t183802z-e01-f5d16b94-548e037d9c5c",
+  "scope": "same-machine clean-environment algorithm rebuild",
+  "score_atol": 1e-07,
+  "score_rtol": 1e-06,
+  "scores_exact": true,
+  "timings_compared": false
+}

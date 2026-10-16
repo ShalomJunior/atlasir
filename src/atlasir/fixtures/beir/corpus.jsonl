@@ -1,0 +1,4 @@
+{"_id":"a","title":"Lexical retrieval","text":"Match exact query terms with BM25."}
+{"_id":"b","title":"Dense retrieval","text":"Encode queries and documents as vectors."}
+{"_id":"c","title":"Run preservation","text":"Save inputs, configuration and outputs."}
+{"_id":"d","title":"Unrelated document","text":"A synthetic distractor for metric checks."}

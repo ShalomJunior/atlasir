@@ -1,0 +1,6 @@
+{"_id":"q-001","text":"Compare lexical and dense retrieval."}
+{"_id":"q-002","text":"A query with no positively judged document."}
+{"_id":"q-003","text":"Preserve experiment records."}
+{"_id":"q-004","text":"  PRESERVE   experiment records. "}
+{"_id":"q-005","text":"Encode a query as a vector."}
+{"_id":"q-006","text":"Keep a historical configuration."}

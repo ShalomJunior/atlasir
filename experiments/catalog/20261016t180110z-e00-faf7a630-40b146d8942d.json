@@ -1,0 +1,8 @@
+{
+  "checksums_sha256": "1e1204c4b1a212cac395d468334918ef3b02034b3e355b144269d62c89f862d1",
+  "run_id": "20261016t180110z-e00-faf7a630-40b146d8942d",
+  "run_path": "artifacts/runs/20261016t180110z-e00-faf7a630-40b146d8942d",
+  "schema_version": 1,
+  "spec_id": "faf7a630c05e7ef3521b659658b720a297b05946411bab61d92892f41da0bc75",
+  "state": "local-sealed"
+}

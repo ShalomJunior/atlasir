@@ -1,0 +1,35 @@
+# Python environments, tools and build products
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+build/
+dist/
+*.egg-info/
+.cache/
+
+# Local state and credentials
+.env
+.env.*
+!.env.example
+.aws/
+.codex/
+.agents/
+kaggle.json
+.dvc/config.local
+
+# Ephemeral research work; DVC will ignore individual artifact targets later.
+.scratch/
+# Ignore result directories, not their adjacent future DVC pointer files.
+artifacts/runs/*/
+artifacts/objects/*/
+*.bundle/
+mlruns/
+mlflow.db*
+
+# Editors / OS
+.DS_Store
+*~

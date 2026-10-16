@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "run_id": "20261016t180110z-e00-faf7a630-40b146d8942d",
+  "event": "local-export-restore-verified",
+  "date": "2026-10-16",
+  "matched_files": 10,
+  "export_bytes": 59621,
+  "independent_backup": false,
+  "remote_uploaded": false,
+  "method": "CLI export, restore to a separate directory, verify, compare every file byte-for-byte",
+  "source_and_destination": "same local filesystem"
+}

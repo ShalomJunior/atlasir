@@ -1,0 +1,35 @@
+{
+  "actual_validation_fraction": 0.25,
+  "file_hashes": {
+    "corpus.jsonl": "37523f7b07ad35759da237d3cff746d189245e48514c043d36bed4e786019234",
+    "qrels/train.tsv": "a1e694ded40c0b2537f1aec8100a119750b2ea9e795d176f7c0504acf3b10f6e",
+    "queries.jsonl": "54a6a9cd67880bc1917656efedbda01623fd7cac0b6d5243ce34d4816383f7da"
+  },
+  "groups": [
+    [
+      "q-001"
+    ],
+    [
+      "q-002"
+    ],
+    [
+      "q-003",
+      "q-004"
+    ]
+  ],
+  "name": "fixture",
+  "normalization": "NFKC-casefold-whitespace-v1",
+  "official_split": "train",
+  "schema_version": 1,
+  "seed": 17,
+  "strategy": "sha256-group-order-v1",
+  "target_validation_fraction": 0.2,
+  "train_ids": [
+    "q-002",
+    "q-003",
+    "q-004"
+  ],
+  "validation_ids": [
+    "q-001"
+  ]
+}

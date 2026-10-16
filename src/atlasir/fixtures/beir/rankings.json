@@ -1,0 +1,5 @@
+{
+  "q-001": [{"doc_id": "b", "score": 2.0}, {"doc_id": "a", "score": 1.0}],
+  "q-003": [{"doc_id": "d", "score": 2.0}, {"doc_id": "c", "score": 1.0}],
+  "q-004": [{"doc_id": "c", "score": 1.0}]
+}

@@ -1,0 +1,16 @@
+schema_version: 2
+family: E01
+protocol: day04-bm25-v1
+seed: 17
+method: lucene
+idf_method: lucene
+backend: numpy
+dtype: float32
+k1: 1.2
+b: 0.75
+top_k: 1000
+lowercase: true
+token_pattern: '(?u)\b\w\w+\b'
+stopwords: none
+stemmer: none
+self_matches: exclude

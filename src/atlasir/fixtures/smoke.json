@@ -1,0 +1,15 @@
+{
+  "corpus": [
+    {"_id": "d-001", "title": "Lexical retrieval", "text": "BM25 ranks documents using matching terms."},
+    {"_id": "d-002", "title": "Dense retrieval", "text": "An encoder maps queries and documents to vectors."},
+    {"_id": "d-003", "title": "Experiment records", "text": "Preserve configurations and artifacts for every run."}
+  ],
+  "queries": [
+    {"_id": "q-001", "text": "How does lexical retrieval match words?"},
+    {"_id": "q-002", "text": "How can I preserve experiment outputs?"}
+  ],
+  "qrels": [
+    {"query_id": "q-001", "doc_id": "d-001", "relevance": 1},
+    {"query_id": "q-002", "doc_id": "d-003", "relevance": 1}
+  ]
+}
