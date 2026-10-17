@@ -12,6 +12,10 @@ license = "MIT"
 authors = [{ name = "Shalom NUKUNU" }]
 dependencies = ["ir-measures>=0.3.7,<0.5", "bm25s>=0.2,<0.3", "PyYAML>=6.0.2,<7"]
 
+[project.optional-dependencies]
+dense = ["torch==2.9.1", "transformers==4.57.1", "safetensors==0.6.2"]
+search = ["faiss-cpu==1.13.2"]
+
 [project.scripts]
 atlasir = "atlasir.cli:main"
 

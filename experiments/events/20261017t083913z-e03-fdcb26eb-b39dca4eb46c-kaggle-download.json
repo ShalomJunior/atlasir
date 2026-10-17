@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "run_id": "20261017t083913z-e03-fdcb26eb-b39dca4eb46c",
+  "event": "kaggle-comparison-download-verified",
+  "archive_sha256": "da164b7d0be420d6da2b0fd0399f93a90a8f338b1a9a6868e6b41311dcff1436",
+  "archive_bytes": 140312870,
+  "source_sha256": "fb6e1caa0adf0ebe338131c8785637218f447294858acdf24e4d9a4181b98426",
+  "quality_recalculation": "exact match from saved rankings",
+  "objects_verified": 897,
+  "passage_rows": 5183,
+  "query_rows": 809,
+  "dense_index_vectors": "exact match",
+  "local_faiss_replay": {
+    "rankings_with_any_difference": 550,
+    "top10_differences": [],
+    "top100_membership_differences": [],
+    "top1000_membership_differences": [],
+    "max_score_abs_difference": 2.384185791015625e-07,
+    "scores_within_declared_tolerance": true
+  },
+  "encoder_device": "cuda:0",
+  "gpu": "Tesla T4",
+  "encoding_seconds": {
+    "passage": 70.10938959700007,
+    "query": 16.955738083997403
+  },
+  "passages_truncated": 466,
+  "passage_token_length_max": 1941,
+  "independent_drive_copy": "not verified in this step",
+  "train_historical_bm25_rankings": "exact scores and IDs",
+  "validation_historical_bm25_rankings": "exact scores and IDs"
+}

@@ -1,0 +1,53 @@
+{
+  "clean_vs_resumed_exact": true,
+  "documents": 16,
+  "event": "day07-cpu-shard-pilot",
+  "execution_profile": "optional shared CPU environment; not the locked dense/search Kaggle profile",
+  "first_shard_bytes_preserved": true,
+  "forecast": {
+    "approx_full_source_flat_index_vector_bytes": 7961088,
+    "document_token_lengths": {
+      "max": 1921,
+      "mean": 461.375,
+      "truncated": 4
+    },
+    "encoding_seconds_by_shard": [
+      1.932792038000116,
+      1.689013425999292,
+      0.6905533909994119,
+      1.5670226050006022
+    ],
+    "excludes": "model download/load, checksums, checkpoint IO, repeats and export",
+    "full_source_float32_embedding_bytes": 7961088,
+    "index_build_seconds": 0.005195891999392188,
+    "model_object_bytes": 134478053,
+    "pilot_index_bytes": 24621,
+    "projected_source_encoding_seconds": 1904.5521316985628,
+    "projection_with_2x_margin_seconds": 3809.1042633971256,
+    "query_batch_size": 1,
+    "query_search_seconds": [
+      0.001410513001246727,
+      0.00012081100067007355,
+      0.00011015500058420002,
+      0.00011984199954895303
+    ],
+    "sample_documents": 16,
+    "sample_encoding_seconds": 5.879381459999422,
+    "scope": "single small source pilot; projection, not final latency or quota guarantee",
+    "source_documents": 5183
+  },
+  "independent_drive_restore": "pending",
+  "index_reload_rankings": "exact match in recorded FAISS environment",
+  "kaggle_day07_pilot": "pending",
+  "new_shards": 3,
+  "object_export_import": "passed into coordinator store",
+  "objects": 15,
+  "offline_model_restore": "passed from exported verified objects",
+  "passage_shards": 4,
+  "queries": 4,
+  "reused_shards": 1,
+  "run_id": "20261017t072039z-e02-788ce724-4dcacaee3869",
+  "schema_version": 1,
+  "scope": "16-document SciFact source-training infrastructure pilot",
+  "verified_utc": "2026-10-17T07:27:30.307341+00:00"
+}

@@ -64,6 +64,33 @@ def main(argv: list[str] | None = None) -> int:
     reproduce.add_argument("run", type=Path)
     reproduce.add_argument("destination", type=Path)
     reproduce.add_argument("--offline", action="store_true")
+    encode = commands.add_parser(
+        "encode-pilot", help="Run a preserved synthetic E5 compatibility pilot"
+    )
+    encode.add_argument("--inputs", type=Path, default=Path("configs/fixtures/e5-pilot.json"))
+    encode.add_argument("--config", type=Path, default=Path("configs/dense/e5-small-v2.json"))
+    encode.add_argument("--device", choices=["cpu", "cuda:0", "cuda:1"], default="cpu")
+    encode.add_argument("--root", type=Path, default=Path.cwd())
+    encode.add_argument("--source-root", type=Path, default=Path.cwd())
+    encode.add_argument("--run-id")
+    encode.add_argument("--local-files-only", action="store_true")
+    shards = commands.add_parser(
+        "shard-pilot", help="Test portable embedding resume and exact FAISS"
+    )
+    shards.add_argument("--inputs", type=Path, required=True)
+    shards.add_argument("--config", type=Path, default=Path("configs/dense/day07-pilot.json"))
+    shards.add_argument("--device", choices=["cpu", "cuda:0", "cuda:1"], default="cpu")
+    shards.add_argument("--root", type=Path, default=Path.cwd())
+    shards.add_argument("--source-root", type=Path, default=Path.cwd())
+    shards.add_argument("--local-files-only", action="store_true")
+    imported = commands.add_parser("objects-import", help="Verify/import portable binary objects")
+    imported.add_argument("archive", type=Path)
+    imported.add_argument("--store", type=Path, default=Path("artifacts/objects"))
+    checked = commands.add_parser(
+        "verify-shard-pilot", help="Check saved resume, objects and FAISS"
+    )
+    checked.add_argument("run", type=Path)
+    checked.add_argument("--store", type=Path, default=Path("artifacts/objects"))
     run = commands.add_parser("run-fixture", help="Create and seal an E00 preservation fixture")
     run.add_argument("--root", type=Path, default=Path.cwd())
     run.add_argument("--source-root", type=Path, default=Path.cwd())
@@ -101,7 +128,42 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
 
     try:
-        if args.command == "baseline":
+        if args.command == "shard-pilot":
+            from atlasir.day07 import run_shard_pilot
+
+            config = json.loads(args.config.read_bytes())
+            config["encoder"]["device"] = args.device
+            result = run_shard_pilot(
+                inputs_path=args.inputs,
+                config=config,
+                root=args.root,
+                source_root=args.source_root,
+                local_files_only=args.local_files_only,
+            )
+        elif args.command in {"objects-import", "verify-shard-pilot"}:
+            from atlasir.objects import BlobStore, import_objects
+
+            store = BlobStore(args.store)
+            if args.command == "objects-import":
+                result = {"status": "imported", "objects": len(import_objects(args.archive, store))}
+            else:
+                from atlasir.day07 import verify_shard_pilot
+
+                result = verify_shard_pilot(args.run, store)
+        elif args.command == "encode-pilot":
+            from atlasir.encoding_pilot import run_encoding_pilot
+
+            config = json.loads(args.config.read_bytes())
+            config["device"] = args.device
+            result = run_encoding_pilot(
+                inputs_path=args.inputs,
+                config=config,
+                root=args.root,
+                source_root=args.source_root,
+                run_id=args.run_id,
+                local_files_only=args.local_files_only,
+            )
+        elif args.command == "baseline":
             from atlasir.baseline import read_config, run_baseline
 
             result = run_baseline(

@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "run_id": "20261017t083913z-e03-fdcb26eb-b39dca4eb46c",
+  "spec_id": "fdcb26eb38faf0e8410a1181736779fa99610e4d996ff3824f7d6abbb69ac49d",
+  "state": "local-sealed",
+  "run_path": "artifacts/runs/20261017t083913z-e03-fdcb26eb-b39dca4eb46c",
+  "checksums_sha256": "673a52c3742046e2060c61d52b1e0edfb68e5f6024186e8eb4409668d3fd36b8"
+}

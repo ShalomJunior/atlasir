@@ -1,6 +1,7 @@
 """Build a private Kaggle input ZIP from current source and a verified small reference bundle."""
 
 import argparse
+import base64
 import hashlib
 import json
 import tempfile
@@ -28,11 +29,20 @@ def main():
         "SCIFACT-ATTRIBUTION.md": args.attribution.read_bytes(),
     }
     metadata = {
-        "schema_version": 1,
+        "schema_version": 2,
         "reference_run_id": manifest["run_id"],
         "uv_version": "0.11.26",
         "python_profile": "3.11",
         "sha256": {name: hashlib.sha256(data).hexdigest() for name, data in payloads.items()},
+        "base64_files": [name for name in payloads if name.endswith(".tar.gz")],
+    }
+    # Kaggle recursively extracts recognized archives, including archives inside a ZIP.
+    # ASCII base64 preserves the exact gzip bytes without exposing another archive to it.
+    payloads = {
+        name + ".b64" if name in metadata["base64_files"] else name: base64.b64encode(data)
+        if name in metadata["base64_files"]
+        else data
+        for name, data in payloads.items()
     }
     payloads["launcher-input.json"] = (
         json.dumps(metadata, indent=2, sort_keys=True) + "\n"

@@ -136,7 +136,7 @@ Minimum final ablations: query-only versus staged features; routing-only versus 
 
 ## Runtime measurements
 
-Use the [compute protocol](COMPUTE.md). Separate four things: indexing; batched offline scoring; online single-query execution; optional throughput under an explicit concurrency level. Cached rankings or pair scores can accelerate quality experiments but never establish live latency savings.
+Use the [execution protocol](EXECUTION.md). Separate four things: indexing; batched offline scoring; online single-query execution; optional throughput under an explicit concurrency level. Cached rankings or pair scores can accelerate quality experiments but never establish live latency savings.
 
 Runtime includes preprocessing, query encoding when used, retrieval, fusion, policy features/inference, reranking and result assembly. Dataset/model downloads and initial model/index loading are excluded from steady-state timing and reported separately as startup costs. Index time/size, peak RAM/VRAM and resident memory of all loaded alternatives are recorded; a router may save compute while retaining both indexes/models.
 

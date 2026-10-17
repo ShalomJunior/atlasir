@@ -1,0 +1,36 @@
+{
+  "archive_and_run_checksums": "passed",
+  "comparison_to_original_local_baseline": {
+    "metrics_and_ranked_ids": "exact match",
+    "original_run_id": "20261016t183413z-e01-603a3450-feab55da4672",
+    "queries": 162,
+    "rebuilt_run_id": "20261017t061258z-e01-7e1e333a-b63efacc9dc4",
+    "score_atol": 1e-07,
+    "score_rtol": 1e-06,
+    "scores_exact": true,
+    "timings_compared": false
+  },
+  "event": "independent-backup-restore",
+  "gate": "G1 complete",
+  "independent_backup_restore": "passed",
+  "matches_verified_kaggle_download": true,
+  "metric_recalculation": {
+    "metrics": {
+      "MRR@10": 0.6037747403488143,
+      "Recall@100": 0.8904320987654321,
+      "Recall@1000": 0.9629629629629629,
+      "nDCG@10": 0.6385694459442004
+    },
+    "run_id": "20261017t061258z-e01-7e1e333a-b63efacc9dc4",
+    "status": "recalculated"
+  },
+  "received_path": ".scratch/kaggle/drive-redownload/day05-baseline-export.zip",
+  "restore_path": ".scratch/kaggle/drive-restore-20261017/restored-run",
+  "run_id": "20261017t061258z-e01-7e1e333a-b63efacc9dc4",
+  "schema_version": 1,
+  "scope": "SciFact validation baseline backup verified; not a restore of every historical run or future object",
+  "storage": "Google Drive",
+  "storage_origin_evidence": "User reports upload and fresh download from Drive; local received bytes verified here.",
+  "verified_utc": "2026-10-17T06:33:24.423742+00:00",
+  "zip_sha256": "a8d7520327c79216c07af86a6077064f7db661c90c74fceba70ec7cb55f55c23"
+}

@@ -23,9 +23,7 @@ def probe(*, require_gpu=False):
             key: os.environ.get(key)
             for key in ("OMP_NUM_THREADS", "MKL_NUM_THREADS", "OPENBLAS_NUM_THREADS")
         },
-        "scope": (
-            "compatibility only; notebook-kernel torch is separate from locked AtlasIR runtime"
-        ),
+        "scope": "compatibility only; applies to the executable recorded in this report",
         "gpu_status": "not available",
         "gpus": [],
     }

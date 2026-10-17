@@ -173,6 +173,8 @@ def test_source_snapshot_is_stable_and_excludes_generated_files_and_secrets(sour
     (source / ".env").write_text("SECRET=not-for-export")
     (source / "artifacts").mkdir()
     (source / "artifacts" / "large.bin").write_bytes(b"unrelated")
+    (source / "private" / "docs").mkdir(parents=True)
+    (source / "private" / "docs" / "PLAN.md").write_text("Personal working notes")
     after, _ = source_snapshot(source)
     assert before == after
 

@@ -1,0 +1,8 @@
+{
+  "checksums_sha256": "49568540fe2c9fa48eaeb9278d09542592d3599ef606202aa30676f0ffd79214",
+  "run_id": "20261017t073751z-e02-bacf2a48-be0f13e9c6b5",
+  "run_path": "artifacts/runs/20261017t073751z-e02-bacf2a48-be0f13e9c6b5",
+  "schema_version": 1,
+  "spec_id": "bacf2a48f154b4c2f8474e65344ae70113dec09e670787762e2001063a148d31",
+  "state": "local-cpu-shard-pilot-verified"
+}

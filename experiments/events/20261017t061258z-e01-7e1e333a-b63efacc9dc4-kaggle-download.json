@@ -1,0 +1,86 @@
+{
+  "download_sha256": {
+    "day05-baseline-export.zip": "a8d7520327c79216c07af86a6077064f7db661c90c74fceba70ec7cb55f55c23",
+    "day05-compatibility-reports.zip": "bb6db9df8325eb79dce488b320bb1b4ca020bef306858fc349f5c43459b6c37f"
+  },
+  "event": "kaggle-download-verification",
+  "independent_drive_restore": "pending",
+  "kernel_probe": {
+    "cpu_count": 4,
+    "disk_free_bytes": 20677423104,
+    "executable": "/usr/bin/python3",
+    "gpu_status": "passed",
+    "gpus": [
+      {
+        "index": 0,
+        "matrix_multiply": "passed",
+        "name": "Tesla T4",
+        "total_memory_bytes": 15636037632
+      },
+      {
+        "index": 1,
+        "matrix_multiply": "passed",
+        "name": "Tesla T4",
+        "total_memory_bytes": 15636037632
+      }
+    ],
+    "nvidia_smi": "Tesla T4, 580.178.04, 15360 MiB\nTesla T4, 580.178.04, 15360 MiB",
+    "platform": "Linux-6.18.48+-x86_64-with-glibc2.39",
+    "python": "3.13.15",
+    "scope": "compatibility only; notebook-kernel torch is separate from locked AtlasIR runtime",
+    "thread_environment": {
+      "MKL_NUM_THREADS": null,
+      "OMP_NUM_THREADS": null,
+      "OPENBLAS_NUM_THREADS": null
+    },
+    "torch": "2.11.0+cu128",
+    "torch_cuda": "12.8",
+    "torch_threads": 2,
+    "utc": "2026-10-17T06:12:49.086235+00:00"
+  },
+  "launcher_manifest": "matches local v2 input",
+  "local_comparison": {
+    "metrics_and_ranked_ids": "exact match",
+    "original_run_id": "20261016t183413z-e01-603a3450-feab55da4672",
+    "queries": 162,
+    "rebuilt_run_id": "20261017t061258z-e01-7e1e333a-b63efacc9dc4",
+    "score_atol": 1e-07,
+    "score_rtol": 1e-06,
+    "scores_exact": true,
+    "timings_compared": false
+  },
+  "metric_recalculation": {
+    "metrics": {
+      "MRR@10": 0.6037747403488143,
+      "Recall@100": 0.8904320987654321,
+      "Recall@1000": 0.9629629629629629,
+      "nDCG@10": 0.6385694459442004
+    },
+    "run_id": "20261017t061258z-e01-7e1e333a-b63efacc9dc4",
+    "status": "recalculated"
+  },
+  "project_runtime": {
+    "cpu_count": 4,
+    "disk_free_bytes": 20677414912,
+    "executable": "/kaggle/working/atlasir-day05-9e3583cb9690/project-env/bin/python3",
+    "gpu_status": "not available",
+    "gpus": [],
+    "nvidia_smi": "Tesla T4, 580.178.04, 15360 MiB\nTesla T4, 580.178.04, 15360 MiB",
+    "platform": "Linux-6.18.48+-x86_64-with-glibc2.39",
+    "python": "3.11.15",
+    "scope": "compatibility only; notebook-kernel torch is separate from locked AtlasIR runtime",
+    "thread_environment": {
+      "MKL_NUM_THREADS": null,
+      "OMP_NUM_THREADS": null,
+      "OPENBLAS_NUM_THREADS": null
+    },
+    "utc": "2026-10-17T06:12:57.128876+00:00"
+  },
+  "restore": "passed",
+  "run_id": "20261017t061258z-e01-7e1e333a-b63efacc9dc4",
+  "schema_version": 1,
+  "source_sha256": "12f803a55b10bf93344d581e69ba37570a78cdaa1d96d1b93543529c90afdb6f",
+  "timing_note": "CPU pilot timings are not compared across machines; CUDA kernel probe does not certify future locked neural runtime.",
+  "transfer_note": "Local download hashes recorded; notebook-printed outer ZIP hashes were not supplied independently. Inner bundle hashes and input/source identities verified.",
+  "verified_utc": "2026-10-17T06:26:47.600625+00:00"
+}

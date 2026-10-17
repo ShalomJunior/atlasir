@@ -1,0 +1,17 @@
+{
+  "protocol": "day06-e5-pilot-v1",
+  "model": "intfloat/e5-small-v2",
+  "model_revision": "ffb93f3bd4047442299a41ebb6fa998a38507c52",
+  "tokenizer_revision": "ffb93f3bd4047442299a41ebb6fa998a38507c52",
+  "query_prefix": "query: ",
+  "passage_prefix": "passage: ",
+  "pooling": "attention-mask mean",
+  "normalize": true,
+  "dtype": "float32",
+  "attention": "eager",
+  "max_length": 512,
+  "dimension": 384,
+  "batch_size": 8,
+  "seed": 17,
+  "device": "cpu"
+}

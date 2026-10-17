@@ -31,6 +31,24 @@ REQUIRED_FILES = {
     "events.jsonl",
 }
 MAX_ARCHIVE_BYTES = 128 * 1024 * 1024
+ENCODING_REQUIRED_FILES = (REQUIRED_FILES - {"fixture.json"}) | {
+    "pilot-inputs.json",
+    "vectors.npz",
+    "encoding.json",
+    "model-files.json",
+}
+SHARD_REQUIRED_FILES = (REQUIRED_FILES - {"fixture.json"}) | {
+    "pilot-inputs.json",
+    "objects.json",
+    "index.json",
+    "rankings.json",
+    "resume.json",
+    "forecast.json",
+    "partial.checkpoint.zip",
+    "passages.checkpoint.zip",
+    "queries.checkpoint.zip",
+    "clean.checkpoint.zip",
+}
 BASELINE_REQUIRED_FILES = (REQUIRED_FILES - {"fixture.json"}) | {
     "dataset.json",
     "selection.json",
@@ -45,6 +63,33 @@ BASELINE_REQUIRED_FILES = (REQUIRED_FILES - {"fixture.json"}) | {
     "index.json",
     "index.npz",
 }
+
+
+COMPARISON_REQUIRED_FILES = (
+    (REQUIRED_FILES - {"fixture.json"})
+    | {
+        "dataset.json",
+        "selection.json",
+        "data.corpus.jsonl",
+        "data.queries.jsonl",
+        "data.qrels.tsv",
+        "evaluation.json",
+        "opportunity.json",
+        "timing.json",
+        "objects.json",
+        "bm25-index.json",
+        "bm25-index.npz",
+        "dense-index.json",
+        "query-vectors.npz",
+        "passage.checkpoint.zip",
+        "query.checkpoint.zip",
+    }
+    | {
+        f"{role}-{method}-rankings.json.gz"
+        for role in ("train", "validation")
+        for method in ("bm25", "dense", "rrf")
+    }
+)
 
 
 def _now() -> str:
@@ -211,19 +256,37 @@ def verify_run(path: Path) -> dict[str, Any]:
         for name in ("artifact_checksums.json", "COMPLETE.json"):
             actual.pop(name)
         schema = manifest["schema_version"]
-        required = BASELINE_REQUIRED_FILES if schema == 2 else REQUIRED_FILES
+        required = {
+            1: REQUIRED_FILES,
+            2: BASELINE_REQUIRED_FILES,
+            3: ENCODING_REQUIRED_FILES,
+            4: SHARD_REQUIRED_FILES,
+            5: COMPARISON_REQUIRED_FILES,
+        }.get(schema, REQUIRED_FILES)
         if actual != checksums or not required <= actual.keys():
             raise ValueError("Run files do not match the saved checksum inventory")
         if (
             type(schema) is not int
-            or schema not in {1, 2}
+            or schema not in {1, 2, 3, 4, 5}
             or manifest["status"] != "success"
             or complete["run_id"] != manifest["run_id"]
         ):
             raise ValueError("Unsupported or incomplete run manifest")
         _run_id(manifest["run_id"])
         raw_config = json.loads((path / "config.resolved.json").read_bytes())
-        if schema == 2:
+        if schema == 5:
+            from atlasir.comparison import resolved_comparison_config
+
+            config = resolved_comparison_config(raw_config)
+        elif schema == 4:
+            from atlasir.day07 import resolved_shard_pilot_config
+
+            config = resolved_shard_pilot_config(raw_config)
+        elif schema == 3:
+            from atlasir.encoding import resolved_encoder_config
+
+            config = resolved_encoder_config(raw_config)
+        elif schema == 2:
             from atlasir.bm25 import resolved_bm25_config
 
             config = resolved_bm25_config(raw_config)
@@ -251,11 +314,13 @@ def verify_run(path: Path) -> dict[str, Any]:
                 "data.queries.jsonl",
                 "data.qrels.tsv",
             }
+            if schema in {3, 4}:
+                expected = {"pilot-inputs.json"}
             if set(payloads) != expected or any(
                 _digest((path / name).read_bytes()) != digest for name, digest in payloads.items()
             ):
                 raise ValueError("Baseline input snapshot does not match its specification")
-            if manifest["family"] != "E01" or manifest["protocol"] != config["protocol"]:
+            if manifest["family"] != config["family"] or manifest["protocol"] != config["protocol"]:
                 raise ValueError("Unsupported baseline manifest")
         return manifest
     except (OSError, KeyError, TypeError, json.JSONDecodeError) as error:
@@ -263,7 +328,7 @@ def verify_run(path: Path) -> dict[str, Any]:
 
 
 class RunWriter:
-    """Reserve, write and seal E00 fixtures or schema-2 BM25 baselines."""
+    """Reserve and seal versioned fixture, retrieval and embedding-pilot records."""
 
     def __init__(
         self,
@@ -275,9 +340,50 @@ class RunWriter:
         invocation: list[str] | None = None,
         *,
         baseline_payloads: dict[str, bytes] | None = None,
+        encoder_payloads: dict[str, bytes] | None = None,
+        shard_payloads: dict[str, bytes] | None = None,
+        comparison_payloads: dict[str, bytes] | None = None,
     ) -> None:
         self.root = root.resolve()
-        if baseline_payloads is None:
+        if comparison_payloads is not None:
+            from atlasir.comparison import INPUT_FILES, resolved_comparison_config
+
+            config = resolved_comparison_config(config)
+            payloads = dict(comparison_payloads)
+            if set(payloads) != INPUT_FILES or any(
+                value is not None
+                for value in (fixture, baseline_payloads, encoder_payloads, shard_payloads)
+            ):
+                raise ValueError("Comparison requires exactly its frozen dataset inputs")
+            inputs = {"payload_files": {name: _digest(data) for name, data in payloads.items()}}
+            schema, scope = 5, "source-fixed-retrieval-comparison"
+            self.required_files = COMPARISON_REQUIRED_FILES
+        elif shard_payloads is not None:
+            from atlasir.day07 import resolved_shard_pilot_config
+
+            config = resolved_shard_pilot_config(config)
+            payloads = dict(shard_payloads)
+            if (
+                set(payloads) != {"pilot-inputs.json"}
+                or fixture is not None
+                or baseline_payloads is not None
+                or encoder_payloads is not None
+            ):
+                raise ValueError("Shard pilot requires only its declared input snapshot")
+            inputs = {"payload_files": {name: _digest(data) for name, data in payloads.items()}}
+            schema, scope = 4, "source-training-shards-index-pilot"
+            self.required_files = SHARD_REQUIRED_FILES
+        elif encoder_payloads is not None:
+            from atlasir.encoding import resolved_encoder_config
+
+            config = resolved_encoder_config(config)
+            payloads = dict(encoder_payloads)
+            if set(payloads) != {"pilot-inputs.json"} or fixture is not None or baseline_payloads:
+                raise ValueError("Encoding pilot requires only its declared input snapshot")
+            inputs = {"payload_files": {name: _digest(data) for name, data in payloads.items()}}
+            schema, scope = 3, "synthetic-e5-encoding-pilot"
+            self.required_files = ENCODING_REQUIRED_FILES
+        elif baseline_payloads is None:
             config = resolved_fixture_config(config)
             if fixture is None:
                 raise ValueError("A fixture input is required for E00")
@@ -306,6 +412,10 @@ class RunWriter:
             self.required_files = BASELINE_REQUIRED_FILES
         source, git = source_snapshot(source_root)
         runtime = environment()
+        if schema == 3:
+            runtime["device"] = config["device"]
+        elif schema in {4, 5}:
+            runtime["device"] = config["encoder"]["device"]
         spec = {
             "config": config,
             "source_sha256": _digest(source),

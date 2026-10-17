@@ -1,0 +1,78 @@
+{
+  "archive_and_run_checksums": "passed",
+  "cpu_gpu_diagnostic": {
+    "passages": {
+      "max_abs_difference": 1.30385160446167e-07
+    },
+    "queries": {
+      "max_abs_difference": 1.341104507446289e-07
+    }
+  },
+  "dense_runtime": {
+    "cpu_count": 4,
+    "disk_free_bytes": 13591117824,
+    "executable": "/kaggle/working/atlasir-day06-7bc6949f2409/project-env/bin/python3",
+    "gpu_status": "passed",
+    "gpus": [
+      {
+        "index": 0,
+        "matrix_multiply": "passed",
+        "name": "Tesla T4",
+        "total_memory_bytes": 15636037632
+      },
+      {
+        "index": 1,
+        "matrix_multiply": "passed",
+        "name": "Tesla T4",
+        "total_memory_bytes": 15636037632
+      }
+    ],
+    "nvidia_smi": "Tesla T4, 580.178.04, 15360 MiB\nTesla T4, 580.178.04, 15360 MiB",
+    "platform": "Linux-6.18.48+-x86_64-with-glibc2.39",
+    "python": "3.11.15",
+    "scope": "compatibility only; notebook-kernel torch is separate from locked AtlasIR runtime",
+    "thread_environment": {
+      "MKL_NUM_THREADS": null,
+      "OMP_NUM_THREADS": null,
+      "OPENBLAS_NUM_THREADS": null
+    },
+    "torch": "2.9.1+cu128",
+    "torch_cuda": "12.8",
+    "torch_threads": 2,
+    "utc": "2026-10-17T06:56:30.559837+00:00"
+  },
+  "diagnostic_scope": "Different Transformers versions and CPU/GPU; descriptive only, no bitwise-equality guarantee.",
+  "download_sha256": {
+    "day06-dense-runtime.zip": "34cc83bdbf3abc9bf01d215a6a914f6d6eb1dba681b535a0146cf8de45d58886",
+    "day06-e5-pilot-export.zip": "6f7aa45e1dabbf142135b61135ce8c9316b172338e8e76a80d475e94f34aa27b"
+  },
+  "event": "day06-kaggle-download-verification",
+  "independent_drive_restore": "pending",
+  "launcher_identity": "matches local prepared Day 6 input",
+  "model_file_hashes": "weights/config/fast-tokenizer files match CPU pilot",
+  "restore_drill": "passed; exact vector bytes",
+  "run_id": "20261017t065636z-e02-aa0068db-f6e17f35a859",
+  "schema_version": 1,
+  "scope": "synthetic E5 CUDA compatibility; no dense retrieval benchmark",
+  "source_sha256": "c1fe9b49804e589b048feaec2f1d5e68428720f8730b80c1fb337db6e0ae8670",
+  "transfer_note": "Outer downloaded ZIP hashes recorded locally; inner archive hashes and source/input identity verified.",
+  "vector_checks": {
+    "passages": {
+      "dimensions": 384,
+      "max_norm_error": 0.0,
+      "repeat_max_abs_difference": 0.0,
+      "rows": 3,
+      "truncated_ids": [
+        "d03"
+      ]
+    },
+    "queries": {
+      "dimensions": 384,
+      "max_norm_error": 5.960464477539063e-08,
+      "repeat_max_abs_difference": 0.0,
+      "rows": 2,
+      "truncated_ids": []
+    }
+  },
+  "verified_utc": "2026-10-17T07:03:34.270965+00:00"
+}

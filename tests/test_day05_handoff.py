@@ -46,9 +46,24 @@ def test_handoff_roundtrip_and_comparison_guard(tmp_path):
         capture_output=True,
         text=True,
     )
-    inputs = tmp_path / "inputs"
+    uploaded = tmp_path / "uploaded"
     with zipfile.ZipFile(package) as archive:
-        archive.extractall(inputs)
+        # This is the outer ZIP extraction Kaggle performs. No nested archive
+        # remains for Kaggle to extract: gzip payloads are ASCII .b64 files.
+        assert not any(name.endswith((".gz", ".tar", ".zip")) for name in archive.namelist())
+        archive.extractall(uploaded)
+    notebook = json.loads((ROOT / "notebooks/kaggle-day05.ipynb").read_bytes())
+    bootstrap = "".join(notebook["cells"][1]["source"])
+    namespace = {
+        "ATLASIR_INPUT_ROOT": uploaded,
+        "ATLASIR_WORKING_ROOT": tmp_path / "working",
+    }
+    exec(compile(bootstrap, "kaggle-bootstrap", "exec"), namespace)
+    inputs = namespace["INPUT"]
+    assert (namespace["SOURCE"] / "pyproject.toml").is_file()
+    assert (inputs / "reference.bundle/run.tar.gz").read_bytes() == (
+        bundle / "run.tar.gz"
+    ).read_bytes()
     output = tmp_path / "output"
     completed = subprocess.run(
         [
@@ -83,6 +98,17 @@ def test_handoff_roundtrip_and_comparison_guard(tmp_path):
     assert broken.returncode != 0
     assert "hash mismatch" in broken.stderr
     assert not (tmp_path / "must-not-exist").exists()
+    # The notebook itself must also reject damaged encoded bytes before extraction.
+    encoded = uploaded / "source.tar.gz.b64"
+    encoded.write_bytes(b"not valid base64!")
+    with pytest.raises(ValueError):
+        exec(
+            compile(bootstrap, "kaggle-bootstrap", "exec"),
+            {
+                "ATLASIR_INPUT_ROOT": uploaded,
+                "ATLASIR_WORKING_ROOT": tmp_path / "damaged-working",
+            },
+        )
     different = run_baseline(
         data=ROOT / "src/atlasir/fixtures/beir",
         name="fixture",

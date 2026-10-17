@@ -1,6 +1,6 @@
 # Day 5: historical reproduction and first Kaggle session
 
-The local historical rebuild is complete. Actual Kaggle execution and independent Drive restore still require the user's account/session. Neither is inferred from the local checks.
+The local historical rebuild and actual Kaggle execution are complete. The downloaded Kaggle run restored locally and matched all 162 validation outcomes exactly. Independent Google Drive download/restore also passed on 17 October 2026; G1 is complete. See the current progress record.
 
 ## Historical algorithm rebuild
 
@@ -19,10 +19,29 @@ The Day 4 validation rebuild on this machine matched all scores exactly. Its rec
 Run from the project, with new output destinations:
 
 ```sh
-uv run --locked python scripts/prepare_kaggle_day05.py --reference .scratch/exports/20261016t183413z-e01-603a3450-feab55da4672.bundle --attribution .scratch/exports/SCIFACT-ATTRIBUTION.md --destination .scratch/kaggle/atlasir-day05-input.zip
+uv run --locked python scripts/prepare_kaggle_day05.py --reference .scratch/exports/20261016t183413z-e01-603a3450-feab55da4672.bundle --attribution .scratch/exports/SCIFACT-ATTRIBUTION.md --destination .scratch/kaggle/atlasir-day05-input-v2.zip
 ```
 
-This creates a roughly 10 MB ZIP containing a deterministic source archive, hash manifest, verified validation reference bundle and attribution notice. It includes source/lock/config/docs/notebook, not the virtual environment or credentials. The reference bundle supplies the frozen selection and raw development inputs. Keep it private; retain the data terms/attribution with the inputs. This is a snapshot of current reviewed files, independent of a moving Git branch. Git commit identity will be an additional checkpoint once committed.
+This creates an upload-safe ZIP containing a deterministic source archive, hash manifest, verified validation reference bundle and attribution notice. It includes source/lock/config/docs/notebook, not the virtual environment or credentials. The reference bundle supplies the frozen selection and raw development inputs. Keep it private; retain the data terms/attribution with the inputs. This is a snapshot of current reviewed files, independent of a moving Git branch. The source checkpoint is also available in GitHub commit `75f863c`; this corrected upload has its own source hash.
+
+## Why the v2 upload is needed
+
+The first Kaggle upload recursively unpacked the nested `source.tar.gz` and
+`reference.bundle/run.tar.gz`, and archives inside the saved run. This removed
+bytes required by the original checksums. Changing paths or rebuilding a ZIP
+from those extracted files would not preserve the original archive identity.
+
+Version 2 stores the two nested archives as base64 text (`.b64`) during upload.
+The updated first notebook cell decodes them into a fresh working directory,
+checks their original SHA256 values, and only then extracts/uses them. Base64 is
+an encoding for transport, not encryption or a change to the experiment. Keep
+this dataset private as before. This fix leaves historical runs untouched.
+
+If you uploaded v1, update that dataset with `atlasir-day05-input-v2.zip`, or
+attach a new private v2 dataset and remove the old input. Use the updated local
+notebook, or replace only its first code cell with the contents of
+`.scratch/kaggle/day05-first-cell-v2.py`. Subsequent cells are unchanged. The
+first cell should print `input_checks: passed` before you continue.
 
 ## Run on Kaggle
 
@@ -50,4 +69,4 @@ Upload the entire bundle plus attribution to a private Google Drive `AtlasIR/arc
 
 The configured remote is `https://github.com/ShalomJunior/atlasir.git`. This foundation is ready for a first substantial checkpoint after review/checks: package, lockfile, plans, tests, CI, thin launcher and small provenance records. `.scratch/`, run directories, datasets, indexes, environments and credentials stay out of Git. GitHub stores the source checkpoint; the independent artifact archive stores experiment payloads. Future logical changes should be committed/pushed regularly, rather than waiting until the project is finished.
 
-Remote publication is a separate action from preparing and checking the files. Actual branch/commit/push status is recorded in [Day 5 progress](progress/day-05.md).
+Source publication is separate from preparing and checking experiment artifacts. Run manifests retain their source identity independently of later Git pushes.

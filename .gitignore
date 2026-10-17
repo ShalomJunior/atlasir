@@ -26,6 +26,8 @@ kaggle.json
 # Ignore result directories, not their adjacent future DVC pointer files.
 artifacts/runs/*/
 artifacts/objects/*/
+artifacts/objects/.input-*
+artifacts/objects/.restore-*
 *.bundle/
 mlruns/
 mlflow.db*
@@ -33,3 +35,6 @@ mlflow.db*
 # Editors / OS
 .DS_Store
 *~
+
+# Personal schedules, working notes and machine-specific setup (local only)
+/private/

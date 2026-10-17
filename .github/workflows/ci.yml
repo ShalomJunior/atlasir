@@ -23,15 +23,15 @@ jobs:
       - name: Install Python
         run: uv python install ${{ matrix.python-version }}
       - name: Install locked environment
-        run: uv sync --locked --python ${{ matrix.python-version }}
+        run: uv sync --locked --extra search --python ${{ matrix.python-version }}
       - name: Lint
-        run: uv run --locked ruff check .
+        run: uv run --locked --extra search ruff check .
       - name: Check formatting
-        run: uv run --locked ruff format --check .
+        run: uv run --locked --extra search ruff format --check .
       - name: Run CPU fixture tests
-        run: uv run --locked pytest
+        run: uv run --locked --extra search pytest
       - name: Run package command
-        run: uv run --locked atlasir smoke
+        run: uv run --locked --extra search atlasir smoke
       - name: Build distributable
         run: uv build
       - name: Install wheel in a separate environment
